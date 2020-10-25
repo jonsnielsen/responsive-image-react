@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import PlaceHolderContext from './placeholder/PlaceholderContext';
 import { Source } from './types';
+import { useImageLoad } from './utils';
 
-interface IImage {
+export interface IImage {
   alt: string;
   aspectRatio: number;
   src: string;
@@ -10,23 +12,38 @@ interface IImage {
   onLoad?(): void;
 }
 
-const Image = ({ alt, aspectRatio, sources, placeholder, src, onLoad }: IImage) => {
-  const imgRef = useRef<HTMLImageElement>(null);
+const Image = ({
+  alt,
+  aspectRatio,
+  sources,
+  placeholder,
+  src,
+  onLoad,
+}: IImage) => {
+  const { imgRef } = useImageLoad({ onLoad: onImageLoad });
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-  useEffect(() => {
-    const img = imgRef.current;
-    if (onLoad && img && img.complete) {
+  function onImageLoad() {
+    console.log('onImageLoadCalled');
+    setIsImageLoaded(true);
+    if (onLoad) {
       onLoad();
     }
-  });
+  }
 
   return (
     <div style={{ width: '100%', position: 'relative' }}>
       <div style={{ paddingBottom: `${aspectRatio * 100}%` }}>
-        {placeholder}
+        <PlaceHolderContext.Provider value={{ isImageLoaded }}>
+          {placeholder}
+        </PlaceHolderContext.Provider>
         <picture>
           {sources.map(source => (
-            <source type={source.type} srcSet={source.srcSet} sizes={source.sizes} />
+            <source
+              type={source.type}
+              srcSet={source.srcSet}
+              sizes={source.sizes}
+            />
           ))}
           <img
             style={{
@@ -42,7 +59,7 @@ const Image = ({ alt, aspectRatio, sources, placeholder, src, onLoad }: IImage) 
             // src will only be the one used when srcSet is not supported
             src={src}
             alt={alt}
-            onLoad={onLoad}
+            onLoad={onImageLoad}
             ref={imgRef}
           />
         </picture>

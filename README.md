@@ -1,4 +1,7 @@
-# node-image-processing
+# responsive-image-react
+
+NB! This library hasn't reached version 1 and as such the api may change frequently.
+ 
 A library for automatically generating optimized images at various image sizes. The main function returns the relevant data, such as `srcSet`, `sizes`, `lqip`, so they can be used for responsive optimized images in the browser.
 
 ## Getting started

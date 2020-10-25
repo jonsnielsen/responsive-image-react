@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Image from '../src/Image';
 import { Source } from '../src/types';
-import { Lqip, SlideOut } from '../src/placeholders/index';
+import {
+  LqipPlaceholder,
+  ColorCoverPlaceholder,
+} from '../src/placeholder/index';
 
 export default { title: 'Image' };
 
@@ -12,12 +15,14 @@ const imageSources: Source[] = [
   {
     type: 'image/webp',
     srcSet: `${sanitySrc}?w=300&auto=format 300w, ${sanitySrc}?w=475&auto=format 475w, ${sanitySrc}?w=600&auto=format 600w, ${sanitySrc}?w=950&auto=format 950w`,
-    sizes: '(max-width: 400px) 67vw, (max-width: 500px) 78vw, (max-width: 700px) 91vw, 1900px',
+    sizes:
+      '(max-width: 400px) 67vw, (max-width: 500px) 78vw, (max-width: 700px) 91vw, 1900px',
   },
   {
     type: 'image/png',
     srcSet: `${sanitySrc}?w=300 300w, ${sanitySrc}?w=475 475w, ${sanitySrc}?w=600 600w, ${sanitySrc}?w=950 950w`,
-    sizes: '(max-width: 400px) 67vw, (max-width: 500px) 78vw, (max-width: 700px) 91vw, 1900px',
+    sizes:
+      '(max-width: 400px) 67vw, (max-width: 500px) 78vw, (max-width: 700px) 91vw, 1900px',
   },
 ];
 
@@ -46,7 +51,9 @@ export const image = () => {
         />
         helloo
       </div>
-      <h2>Combining Art Direction with Resolution Switching (with webp and png)</h2>
+      <h2>
+        Combining Art Direction with Resolution Switching (with webp and png)
+      </h2>
       <div style={{ width: '80%', maxWidth: '1200px' }}>
         <Image
           alt="hello"
@@ -62,50 +69,51 @@ export const image = () => {
 };
 
 export const placeholders = () => {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-
-  const onImageLoad = () => {
-    setTimeout(() => {
-      setIsImageLoaded(true);
-    }, 1000);
-  };
-
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px' }}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr 1fr',
+        gap: '20px',
+      }}
+    >
       <div>
         lqip (Low Quality Image Placeholder)
         <Image
-          onLoad={() => onImageLoad()}
           alt=""
           aspectRatio={0.66}
           src={sanitySrc}
           sources={[]}
-          placeholder={<Lqip isImageLoaded={isImageLoaded} base64={lqipSrc} />}
+          placeholder={<LqipPlaceholder base64={lqipSrc} />}
         />
       </div>
       <div>
         lqip (Fading Out)
         <Image
-          onLoad={() => onImageLoad()}
           alt=""
           aspectRatio={0.66}
           src={sanitySrc}
           sources={[]}
           placeholder={
-            <Lqip isImageLoaded={isImageLoaded} base64={lqipSrc} fadeOutOptions={{ fadeOutDurationMs: 400 }} />
+            <LqipPlaceholder
+              base64={lqipSrc}
+              fadeOutOptions={{ fadeOutDurationMs: 400 }}
+            />
           }
         />
       </div>
       <div>
         Cover Slide (Sliding out)
         <Image
-          onLoad={() => onImageLoad()}
           alt=""
           aspectRatio={0.66}
           src={sanitySrc}
           sources={[]}
           placeholder={
-            <SlideOut coverColor="#418031" isImageLoaded={isImageLoaded} fadeOutOptions={{ fadeOutDurationMs: 300 }} />
+            <ColorCoverPlaceholder
+              coverColor="#418031"
+              fadeOutOptions={{ fadeOutDurationMs: 300 }}
+            />
           }
         />
       </div>
