@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PlaceHolderContext from './placeholder/PlaceholderContext';
-import { Source } from './types';
-import { useImageLoad } from './utils';
+import PlaceHolderContext from '../placeholder/PlaceholderContext';
+import { Source } from '../types';
+import { useImageLoad } from '../utils';
 
 export interface IImage {
   alt: string;
@@ -38,8 +38,9 @@ const Image = ({
           {placeholder}
         </PlaceHolderContext.Provider>
         <picture>
-          {sources.map(source => (
+          {sources.map((source, i) => (
             <source
+              key={i}
               type={source.type}
               srcSet={source.srcSet}
               sizes={source.sizes}

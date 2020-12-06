@@ -1,0 +1,20 @@
+.video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerBase {
+  position: relative;
+}
+
+.containerFill {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerResponsive {
+  width: 100%;
+}

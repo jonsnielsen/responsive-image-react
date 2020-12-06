@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from '../src/Image';
+import Image from '../src/Image/Image';
 import { Source } from '../src/types';
 import {
   LqipPlaceholder,
