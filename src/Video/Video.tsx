@@ -9,7 +9,8 @@ import React, {
 } from 'react';
 import { VideoSource } from './videoTypes';
 import PlaceHolderContext from '../placeholder/PlaceholderContext';
-import styles from './video.module.css';
+import videoStyles from './video.module.css';
+import commonStyles from '../styles.module.css';
 import { VideoBaseProps } from '../types';
 import { useImageLoad } from '../utils';
 import { isVideoSource } from './videoUtils';
@@ -37,37 +38,48 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(
     }: VideoProps,
     forwardedRef
   ) => {
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [isVideoLoaded, setIsVideoLoaded] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
-    console.log({ forwardedRef });
+
+    function onVideoLoad() {
+      console.log('onVideoLoadCalled');
+      setIsVideoLoaded(true);
+      if (onLoad) {
+        onLoad();
+      }
+    }
 
     useEffect(() => {
-      if (autoPlay) {
+      if (autoPlay || isBackgroundVideo) {
         videoRef?.current?.play();
       }
     }, []);
 
     const containerClassNameLayout =
-      (layout === 'fill' && styles.containerFill) ||
-      (layout === 'responsive' && styles.containerResponsive) ||
+      (layout === 'fill' && commonStyles.containerFill) ||
+      (layout === 'responsive' && commonStyles.containerResponsive) ||
       '';
-    const containerClassName = `${styles.containerBase} ${containerClassNameLayout}`;
+    const containerClassName = `${commonStyles.containerBase} ${containerClassNameLayout}`;
     const containerInlineStyles: CSSProperties =
       (layout === 'responsive' && {
-        paddingBottom: `${(width! / height!) * 100}%`,
+        paddingBottom: `${(height! / width!) * 100}%`,
       }) ||
       {};
 
     return (
       <div style={containerInlineStyles} className={containerClassName}>
+        <PlaceHolderContext.Provider value={{ isImageLoaded: isVideoLoaded }}>
+          {placeholder}
+        </PlaceHolderContext.Provider>
         <video
           {...nativeVideoProps}
-          className={styles.video}
+          className={videoStyles.video}
           ref={forwardedRef || videoRef}
           muted={isBackgroundVideo ? true : muted}
           loop={isBackgroundVideo ? true : loop}
           playsInline={isBackgroundVideo ? false : playsInline}
           controls={isBackgroundVideo ? false : controls}
+          onLoadedData={onVideoLoad} // Fired when the first frame of the video is loaded
         >
           {sources.map(source =>
             isVideoSource(source) ? (

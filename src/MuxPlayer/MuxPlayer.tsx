@@ -29,28 +29,19 @@ const Vimeo = ({
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hls] = useState(() => new Hls());
   const videoRef = useRef<HTMLVideoElement>(null);
-  // const wrapperStyle = layout === 'fill' ? styles.wrapperFill : styles.test;
-
-  // hls.loadSource(
-  //   'https://stream.mux.com/QhB33iydisgSEarLVrPFxm9ssRfyom7duGHZOfjfZIc.m3u8'
-  //   // GET https://image.mux.com/QhB33iydisgSEarLVrPFxm9ssRfyom7duGHZOfjfZIc/animated.gif?start=5
-  // );
 
   function attemptPlay() {
     videoRef.current
       ?.play()
       .catch(err => console.log('error attempting to play: ', err));
   }
-  hls.loadSource(
-    `https://stream.mux.com/${playbackId}.m3u8`
-    // GET https://image.mux.com/QhB33iydisgSEarLVrPFxm9ssRfyom7duGHZOfjfZIc/animated.gif?start=5
-  );
+  hls.loadSource(`https://stream.mux.com/${playbackId}.m3u8`);
 
   useEffect(() => {
     if (videoRef.current) {
       hls.attachMedia(videoRef.current);
     }
-    if (autoPlay) {
+    if (autoPlay || isBackgroundVideo) {
       attemptPlay();
     }
   }, []);

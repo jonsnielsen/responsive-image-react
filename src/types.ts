@@ -1,17 +1,11 @@
-export enum Layout {
-  Responsive = 'responsive',
-  Fill = 'fill',
-  Fixed = 'fixed',
-}
-// export type Layout = 'responsive' | 'fill' | 'fixed';
+import { ReactElement } from 'react';
 
 const VALID_LAYOUT_VALUES = ['fill', 'fixed', 'responsive'] as const;
 type LayoutValue = typeof VALID_LAYOUT_VALUES[number];
 
 export type MediaBaseProps = {
-  // layout: Layout;
   layout: LayoutValue;
-  placeholder?: React.ReactNode;
+  placeholder?: ReactElement;
 } & (
   | {
       width?: never;
@@ -25,20 +19,19 @@ export type MediaBaseProps = {
     }
 );
 
-export type VideoBaseProps = MediaBaseProps &
+// export type VideoBaseProps = MediaBaseProps & {
+//   isBackgroundVideo?: boolean;
+//   onLoad?(): void;
+// };
+export type VideoBaseProps = Omit<
   React.DetailedHTMLProps<
     React.VideoHTMLAttributes<HTMLVideoElement>,
     HTMLVideoElement
-  > & {
-    // autoPlay?: boolean;
-    // loop?: boolean;
-    /**
-     * A Boolean attribute indicating that the video is to be played "inline", that is within the element's playback area. Note that the absence of this attribute does not imply that the video will always be played in fullscreen.
-     */
-    // playsInline?: boolean;
-    // showControls?: boolean;
+  >,
+  'placeholder'
+> &
+  MediaBaseProps & {
     isBackgroundVideo?: boolean;
-    // muted?: boolean;
     onLoad?(): void;
   };
 

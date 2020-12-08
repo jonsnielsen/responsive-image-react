@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Image from '../src/Image/Image';
 import { Source } from '../src/types';
-import {
-  LqipPlaceholder,
-  ColorCoverPlaceholder,
-} from '../src/placeholder/index';
+import { LqipPlaceholder, ColorCoverPlaceholder } from '../src/placeholder';
+import { StoryWrapper } from './components/StoryWrapper';
+import { ElementWrapper } from './components/ElementWrapper';
+import { MediaContainer } from './components/MediaContainer';
 
 export default { title: 'Image' };
 
@@ -31,92 +31,96 @@ const lqipSrc =
 
 export const image = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <h2>Resolution switching with (with webp and png)</h2>
-      <div style={{ width: '80%', maxWidth: '1200px' }}>
-        <Image
-          alt="hello"
-          aspectRatio={0.66}
-          src={sanitySrc}
-          sources={imageSources}
-          // placeholder={<Lqip base64={lqipSrc} />}
-        />
-        helloo
-      </div>
-      <h2>
-        Combining Art Direction with Resolution Switching (with webp and png)
-      </h2>
-      <div style={{ width: '80%', maxWidth: '1200px' }}>
-        <Image
-          alt="hello"
-          aspectRatio={0.66}
-          src={sanitySrc}
-          sources={imageSources}
-          // placeholder={<Lqip base64={lqipSrc} />}
-        />
-        helloo
-      </div>
-    </div>
+    <StoryWrapper>
+      <ElementWrapper>
+        <h2>Resolution switching with (with webp and png)</h2>
+        <MediaContainer>
+          <Image
+            alt="hello"
+            layout="responsive"
+            width={5}
+            height={3.3}
+            src={sanitySrc}
+            sources={imageSources}
+            // placeholder={<Lqip base64={lqipSrc} />}
+          />
+        </MediaContainer>
+      </ElementWrapper>
+      <ElementWrapper>
+        <h2>
+          Combining Art Direction with Resolution Switching (with webp and png)
+        </h2>
+        <MediaContainer>
+          <Image
+            alt="hello"
+            layout="responsive"
+            width={5}
+            height={3.3}
+            src={sanitySrc}
+            sources={imageSources}
+            // placeholder={<Lqip base64={lqipSrc} />}
+          />
+        </MediaContainer>
+      </ElementWrapper>
+    </StoryWrapper>
   );
 };
 
 export const placeholders = () => {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr',
-        gap: '20px',
-      }}
-    >
-      <div>
+    <StoryWrapper>
+      <ElementWrapper>
         lqip (Low Quality Image Placeholder)
-        <Image
-          alt=""
-          aspectRatio={0.66}
-          src={sanitySrc}
-          sources={[]}
-          placeholder={<LqipPlaceholder base64={lqipSrc} />}
-        />
-      </div>
-      <div>
+        <MediaContainer>
+          <Image
+            alt=""
+            layout="responsive"
+            width={5}
+            height={3.3}
+            src={sanitySrc}
+            sources={[]}
+            placeholder={<LqipPlaceholder base64={lqipSrc} />}
+          />
+        </MediaContainer>
+      </ElementWrapper>
+      <ElementWrapper>
         lqip (Fading Out)
-        <Image
-          alt=""
-          aspectRatio={0.66}
-          src={sanitySrc}
-          sources={[]}
-          placeholder={
-            <LqipPlaceholder
-              base64={lqipSrc}
-              fadeOutOptions={{ fadeOutDurationMs: 400 }}
-            />
-          }
-        />
-      </div>
-      <div>
+        <MediaContainer>
+          <Image
+            alt=""
+            width={5}
+            height={3.3}
+            layout="responsive"
+            src={sanitySrc}
+            sources={[]}
+            placeholder={
+              <LqipPlaceholder
+                base64={lqipSrc}
+                fadeOutOptions={{ fadeOutDurationMs: 400 }}
+              />
+            }
+          />
+        </MediaContainer>
+      </ElementWrapper>
+      <ElementWrapper>
         Cover Slide (Sliding out)
-        <Image
-          alt=""
-          aspectRatio={0.66}
-          src={sanitySrc}
-          sources={[]}
-          placeholder={
-            <ColorCoverPlaceholder
-              coverColor="#418031"
-              fadeOutOptions={{ fadeOutDurationMs: 300 }}
-            />
-          }
-        />
-      </div>
-    </div>
+        <MediaContainer>
+          <Image
+            alt=""
+            width={5}
+            height={3.3}
+            layout="responsive"
+            src={sanitySrc}
+            sources={[]}
+            placeholder={
+              <ColorCoverPlaceholder
+                coverColor="#418031"
+                fadeOutOptions={{ fadeOutDurationMs: 300 }}
+              />
+            }
+          />
+        </MediaContainer>
+      </ElementWrapper>
+    </StoryWrapper>
   );
 };

@@ -5,6 +5,7 @@ interface IUseImageLoad {
 }
 
 /**
+ *  Calls the provided 'onLoad' parameter if the image is loaded.
  *  Necessary in the rare event that the image source is loaded by the browser before javascript is initialized, meaning that the onLoad in the <img /> element won't fire
  */
 export function useImageLoad({ onLoad }: IUseImageLoad) {
