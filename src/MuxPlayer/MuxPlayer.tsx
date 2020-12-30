@@ -8,36 +8,41 @@ import Hls from 'hls.js';
 import { useImageLoad } from '../utils';
 import { Video } from '../Video';
 
-export type VideoProps = VideoBaseProps & {
+export type MuxPlayerProps = VideoBaseProps & {
   playbackId: string;
-  onLoad?(): void;
+  fallbackToGif?: boolean;
 };
 
-const Vimeo = ({
+export const MuxPlayer = ({
   playbackId,
   layout,
   width,
   height,
   isBackgroundVideo,
   placeholder,
+  controls,
+  muted,
   onLoad,
   loop,
   autoPlay,
   playsInline,
-  ...nativeVideoProps
-}: VideoProps) => {
+  fallbackToGif,
+}: MuxPlayerProps) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [hls] = useState(() => new Hls());
+  // const [hls] = useState(() => new Hls({ enableWorker: false }));
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // if fallback to gif, do something when fail
 
   function attemptPlay() {
     videoRef.current
       ?.play()
       .catch(err => console.log('error attempting to play: ', err));
   }
-  hls.loadSource(`https://stream.mux.com/${playbackId}.m3u8`);
 
   useEffect(() => {
+    const hls = new Hls({ enableWorker: false });
+    hls.loadSource(`https://stream.mux.com/${playbackId}.m3u8`);
     if (videoRef.current) {
       hls.attachMedia(videoRef.current);
     }
@@ -47,8 +52,14 @@ const Vimeo = ({
   }, []);
 
   return (
+    // @ts-ignore sadly have to ignore this as the layout type errors
     <Video
-      {...nativeVideoProps}
+      onLoad={onLoad}
+      loop={loop}
+      playsInline={playsInline}
+      placeholder={placeholder}
+      controls={controls}
+      muted={muted}
       ref={videoRef}
       layout={layout}
       sources={[]}
@@ -59,5 +70,3 @@ const Vimeo = ({
     />
   );
 };
-
-export default Vimeo;

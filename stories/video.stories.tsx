@@ -30,6 +30,7 @@ export const video = () => {
             loop
             layout="fill"
             autoPlay
+            muted
           />
         </MediaContainer>
       </ElementWrapper>
@@ -45,6 +46,7 @@ export const video = () => {
             layout="responsive"
             controls={false}
             autoPlay
+            muted
           />
         </MediaContainer>
       </ElementWrapper>
@@ -56,6 +58,7 @@ export const video = () => {
             width={1200}
             height={674}
             layout="responsive"
+            isBackgroundVideo
           />
         </MediaContainer>
       </ElementWrapper>
@@ -64,6 +67,7 @@ export const video = () => {
         <h2>LqipPlaceholder and Layout: responsive (invalid source)</h2>
         <MediaContainer>
           <Video
+            isBackgroundVideo
             sources={[]}
             width={1200}
             height={674}
@@ -82,6 +86,7 @@ export const video = () => {
         <h2>LqipPlaceholder and Layout: responsive (with valid source)</h2>
         <MediaContainer>
           <Video
+            isBackgroundVideo
             sources={sources}
             width={1200}
             height={674}

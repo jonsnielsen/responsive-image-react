@@ -1,1 +1,1 @@
-export { default as Vimeo } from './Vimeo';
+export * from './Vimeo';

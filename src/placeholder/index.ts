@@ -1,2 +1,3 @@
-export { default as LqipPlaceholder } from './LqipPlaceholder';
-export { default as ColorCoverPlaceholder } from './ColorCoverPlaceholder';
+export * from './ColorCoverPlaceholder';
+export * from './LqipPlaceholder';
+export * from './PlaceholderContext';

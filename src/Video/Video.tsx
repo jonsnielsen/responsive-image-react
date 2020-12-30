@@ -19,7 +19,7 @@ export type VideoProps = VideoBaseProps & {
   sources: VideoSource[];
 };
 
-const Video = forwardRef<HTMLVideoElement, VideoProps>(
+export const Video = forwardRef<HTMLVideoElement, VideoProps>(
   (
     {
       layout,
@@ -34,7 +34,6 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(
       loop,
       playsInline,
       controls,
-      ...nativeVideoProps
     }: VideoProps,
     forwardedRef
   ) => {
@@ -72,7 +71,6 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(
           {placeholder}
         </PlaceHolderContext.Provider>
         <video
-          {...nativeVideoProps}
           className={videoStyles.video}
           ref={forwardedRef || videoRef}
           muted={isBackgroundVideo ? true : muted}
@@ -93,5 +91,3 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(
     );
   }
 );
-
-export default Video;

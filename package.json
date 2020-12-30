@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.4",
   "name": "responsive-image-react",
   "author": "Jonathan Sparvath",
   "license": "MIT",
@@ -83,6 +83,6 @@
   },
   "dependencies": {
     "@vimeo/player": "^2.14.1",
-    "hls.js": "^0.14.16"
+    "hls.js": "^0.14.17"
   }
 }

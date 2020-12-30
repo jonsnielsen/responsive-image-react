@@ -11,7 +11,7 @@ export type ImageProps = MediaBaseProps & {
   onLoad?(): void;
 };
 
-const Image = ({
+export const Image = ({
   alt,
   sources,
   placeholder,
@@ -84,5 +84,3 @@ const Image = ({
     </div>
   );
 };
-
-export default Image;

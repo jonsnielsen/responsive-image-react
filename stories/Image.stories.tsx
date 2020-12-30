@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Image from '../src/Image/Image';
+import { Image } from '../src/Image';
 import { Source } from '../src/types';
-import { LqipPlaceholder, ColorCoverPlaceholder } from '../src/placeholder';
+import { LqipPlaceholder, CoverPlaceholder } from '../src/placeholder';
 import { StoryWrapper } from './components/StoryWrapper';
 import { ElementWrapper } from './components/ElementWrapper';
 import { MediaContainer } from './components/MediaContainer';
@@ -113,7 +113,7 @@ export const placeholders = () => {
             src={sanitySrc}
             sources={[]}
             placeholder={
-              <ColorCoverPlaceholder
+              <CoverPlaceholder
                 coverColor="#418031"
                 fadeOutOptions={{ fadeOutDurationMs: 300 }}
               />

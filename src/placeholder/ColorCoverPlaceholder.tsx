@@ -1,13 +1,6 @@
 import React, { CSSProperties, useContext } from 'react';
 import PlaceHolderContext from './PlaceholderContext';
 
-interface ICoverSlideOut {
-  coverColor: string;
-  fadeOutOptions?: {
-    fadeOutDurationMs: number;
-  };
-}
-
 const coverWrapperContainerStyles: CSSProperties = {
   position: 'absolute',
   top: 0,
@@ -32,7 +25,17 @@ const coverStyles: CSSProperties = {
   height: '100%',
 };
 
-const CoverSlideOut = ({ fadeOutOptions, coverColor }: ICoverSlideOut) => {
+export interface CoverPlaceholderProps {
+  coverColor: string;
+  fadeOutOptions?: {
+    fadeOutDurationMs: number;
+  };
+}
+
+export const CoverPlaceholder = ({
+  fadeOutOptions,
+  coverColor,
+}: CoverPlaceholderProps) => {
   const { isImageLoaded } = useContext(PlaceHolderContext);
 
   const transitionOutStyles = fadeOutOptions && {
@@ -54,5 +57,3 @@ const CoverSlideOut = ({ fadeOutOptions, coverColor }: ICoverSlideOut) => {
     </div>
   );
 };
-
-export default CoverSlideOut;

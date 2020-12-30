@@ -23,6 +23,7 @@ export const mux = () => {
             loop
             layout="fill"
             autoPlay
+            muted
           />
         </MediaContainer>
       </ElementWrapper>
@@ -30,9 +31,9 @@ export const mux = () => {
         <h2>Layout: resonsive</h2>
         <MediaContainer>
           <MuxPlayer
+            isBackgroundVideo
             playbackId="YLXRY1MB00yDUjgP9KQEP2Yhs7cRGLWg3oB01KQTCCN7Y"
             layout="responsive"
-            controls
             height={675}
             width={1200}
           />
@@ -54,6 +55,7 @@ export const mux = () => {
           <MuxPlayer
             playbackId="YLXRY1MB00yDUjgP9KQEP2Ys7cRGLWg3oB01KQTCCN7Y"
             layout="fill"
+            isBackgroundVideo
           />
         </MediaContainer>
       </ElementWrapper>

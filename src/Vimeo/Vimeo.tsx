@@ -6,20 +6,20 @@ import { MediaBaseProps } from '../types';
 import { useImageLoad } from '../utils';
 import Video from '@vimeo/player';
 
-export type VideoProps = MediaBaseProps & {
+export type VimeoProps = MediaBaseProps & {
   videoId: string;
   // aspectRatio: number;
   onLoad?(): void;
 };
 
-const Vimeo = ({
+export const Vimeo = ({
   layout,
   width,
   height,
   videoId,
   placeholder,
   onLoad,
-}: VideoProps) => {
+}: VimeoProps) => {
   // const { imgRef } = useImageLoad({ onLoad: onI });
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const iframeRef = createRef<HTMLIFrameElement>();
@@ -92,5 +92,3 @@ const Vimeo = ({
   // </div>
   // );
 };
-
-export default Vimeo;

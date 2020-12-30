@@ -1,4 +1,4 @@
-export { default as Video } from './Video';
-export type { VideoProps } from './Video'
-export { VideoSource } from './videoTypes';
-export { isVideoSource } from './videoUtils';
+// export type { VideoProps } from './Video'
+export * from './Video';
+export * from './videoTypes';
+export * from './videoUtils';

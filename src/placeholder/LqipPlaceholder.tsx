@@ -10,14 +10,17 @@ const imageStyles: CSSProperties = {
   height: '100%',
 };
 
-interface ILqip {
+export interface LqipPlaceholderProps {
   base64: string;
   fadeOutOptions?: {
     fadeOutDurationMs: number;
   };
 }
 
-const Lqip = ({ base64, fadeOutOptions }: ILqip) => {
+export const LqipPlaceholder = ({
+  base64,
+  fadeOutOptions,
+}: LqipPlaceholderProps) => {
   const { isImageLoaded } = useContext(PlaceHolderContext);
 
   const fadeOutStyles = fadeOutOptions && {
@@ -27,5 +30,3 @@ const Lqip = ({ base64, fadeOutOptions }: ILqip) => {
 
   return <img style={{ ...imageStyles, ...fadeOutStyles }} src={base64} />;
 };
-
-export default Lqip;

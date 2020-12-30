@@ -3,37 +3,44 @@ import { ReactElement } from 'react';
 const VALID_LAYOUT_VALUES = ['fill', 'fixed', 'responsive'] as const;
 type LayoutValue = typeof VALID_LAYOUT_VALUES[number];
 
+export type LayoutFillProps = {
+  layout: 'fill';
+  width?: never;
+  height?: never;
+};
+
+export type LayoutOtherProps = {
+  layout: 'fixed' | 'responsive';
+  width: number;
+  height: number;
+};
+
 export type MediaBaseProps = {
   layout: LayoutValue;
   placeholder?: ReactElement;
-} & (
-  | {
-      width?: never;
-      height?: never;
-      layout: 'fill';
-    }
-  | {
-      width: number;
-      height: number;
-      layout: Exclude<LayoutValue, 'Fill'>;
-    }
-);
+} & (LayoutFillProps | LayoutOtherProps);
 
-// export type VideoBaseProps = MediaBaseProps & {
-//   isBackgroundVideo?: boolean;
-//   onLoad?(): void;
-// };
-export type VideoBaseProps = Omit<
-  React.DetailedHTMLProps<
-    React.VideoHTMLAttributes<HTMLVideoElement>,
-    HTMLVideoElement
-  >,
-  'placeholder'
-> &
-  MediaBaseProps & {
-    isBackgroundVideo?: boolean;
-    onLoad?(): void;
-  };
+export type BackgroundVideoProps = {
+  isBackgroundVideo: true;
+  muted?: never;
+  autoPlay?: never;
+  loop?: never;
+  playsInline?: never;
+  controls?: never;
+};
+
+export type VideoControlProps = {
+  isBackgroundVideo?: never;
+  muted: boolean;
+  autoPlay: boolean;
+  loop: boolean;
+  playsInline: boolean;
+  controls: boolean;
+};
+
+export type VideoBaseProps = MediaBaseProps & {
+  onLoad?(): void;
+} & (BackgroundVideoProps | VideoControlProps);
 
 export type Source = {
   srcSet: string;

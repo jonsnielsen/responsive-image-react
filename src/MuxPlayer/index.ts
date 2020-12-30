@@ -1,1 +1,1 @@
-export { default as MuxPlayer } from './MuxPlayer';
+export * from './MuxPlayer';
