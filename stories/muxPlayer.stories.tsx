@@ -34,8 +34,8 @@ export const mux = () => {
             isBackgroundVideo
             playbackId="YLXRY1MB00yDUjgP9KQEP2Yhs7cRGLWg3oB01KQTCCN7Y"
             layout="responsive"
-            height={675}
-            width={1200}
+            aspectWidth={675}
+            aspectHeight={1200}
           />
         </MediaContainer>
       </ElementWrapper>

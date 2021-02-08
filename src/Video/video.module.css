@@ -1,12 +1,14 @@
+.containerBase {
+  position: relative;
+}
+
 .video {
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.containerBase {
-  position: relative;
+  /* The video on purpose have higher z-index than placeholder (z-index: 1) */
+  z-index: 2;
 }
 
 .containerFill {

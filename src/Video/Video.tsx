@@ -12,24 +12,29 @@ import PlaceHolderContext from '../placeholder/PlaceholderContext';
 import videoStyles from './video.module.css';
 import commonStyles from '../styles.module.css';
 import { VideoBaseProps } from '../types';
-import { useImageLoad } from '../utils';
 import { isVideoSource } from './videoUtils';
 
+// The cache will be cleared on a page refresh, but should work during the browser session
+const cache = new Set<string>();
+
 export type VideoProps = VideoBaseProps & {
+  playsInline?: boolean;
   sources: VideoSource[];
 };
 
 export const Video = forwardRef<HTMLVideoElement, VideoProps>(
   (
     {
+      className,
+      style,
       layout,
-      width,
-      height,
+      aspectWidth,
+      aspectHeight,
       placeholder,
-      onLoad,
-      muted,
-      isBackgroundVideo,
       sources,
+      onLoad,
+      isBackgroundVideo,
+      muted,
       autoPlay,
       loop,
       playsInline,
@@ -41,8 +46,8 @@ export const Video = forwardRef<HTMLVideoElement, VideoProps>(
     const videoRef = useRef<HTMLVideoElement>(null);
 
     function onVideoLoad() {
-      console.log('onVideoLoadCalled');
       setIsVideoLoaded(true);
+      // cache.add(src);
       if (onLoad) {
         onLoad();
       }
@@ -61,13 +66,16 @@ export const Video = forwardRef<HTMLVideoElement, VideoProps>(
     const containerClassName = `${commonStyles.containerBase} ${containerClassNameLayout}`;
     const containerInlineStyles: CSSProperties =
       (layout === 'responsive' && {
-        paddingBottom: `${(height! / width!) * 100}%`,
+        paddingBottom: `${(aspectWidth! / aspectHeight!) * 100}%`,
       }) ||
       {};
 
     return (
-      <div style={containerInlineStyles} className={containerClassName}>
-        <PlaceHolderContext.Provider value={{ isImageLoaded: isVideoLoaded }}>
+      <div
+        style={{ ...containerInlineStyles, ...style }}
+        className={`${containerClassName} ${className}`}
+      >
+        <PlaceHolderContext.Provider value={{ isLoaded: isVideoLoaded }}>
           {placeholder}
         </PlaceHolderContext.Provider>
         <video

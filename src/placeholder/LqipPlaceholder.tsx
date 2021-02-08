@@ -1,4 +1,4 @@
-import React, { useContext, CSSProperties } from 'react';
+import React, { useContext, CSSProperties, useState } from 'react';
 import PlaceHolderContext from './PlaceholderContext';
 
 const imageStyles: CSSProperties = {
@@ -21,12 +21,28 @@ export const LqipPlaceholder = ({
   base64,
   fadeOutOptions,
 }: LqipPlaceholderProps) => {
-  const { isImageLoaded } = useContext(PlaceHolderContext);
+  const { isLoaded } = useContext(PlaceHolderContext);
+  const [isTransitionEnded, setIsTransitionEnded] = useState(false);
 
   const fadeOutStyles = fadeOutOptions && {
     transition: `opacity ${fadeOutOptions.fadeOutDurationMs}ms`,
-    opacity: isImageLoaded ? 0 : 1,
   };
 
-  return <img style={{ ...imageStyles, ...fadeOutStyles }} src={base64} />;
+  // remove the image from dom when isLoaded (or when transition is ended)
+  const isHidden = fadeOutStyles ? isTransitionEnded && isLoaded : isLoaded;
+
+  return isHidden ? null : (
+    <img
+      style={{
+        ...imageStyles,
+        ...fadeOutStyles,
+        opacity: isLoaded ? 0 : 1,
+      }}
+      aria-hidden={true}
+      src={base64}
+      onTransitionEnd={() => {
+        setIsTransitionEnded(true);
+      }}
+    />
+  );
 };

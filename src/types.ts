@@ -1,23 +1,25 @@
-import { ReactElement } from 'react';
+import { ReactElement, CSSProperties } from 'react';
 
 const VALID_LAYOUT_VALUES = ['fill', 'fixed', 'responsive'] as const;
 type LayoutValue = typeof VALID_LAYOUT_VALUES[number];
 
 export type LayoutFillProps = {
   layout: 'fill';
-  width?: never;
-  height?: never;
+  aspectWidth?: never;
+  aspectHeight?: never;
 };
 
 export type LayoutOtherProps = {
   layout: 'fixed' | 'responsive';
-  width: number;
-  height: number;
+  aspectWidth: number;
+  aspectHeight: number;
 };
 
 export type MediaBaseProps = {
   layout: LayoutValue;
   placeholder?: ReactElement;
+  className?: string;
+  style?: CSSProperties;
 } & (LayoutFillProps | LayoutOtherProps);
 
 export type BackgroundVideoProps = {
@@ -25,7 +27,6 @@ export type BackgroundVideoProps = {
   muted?: never;
   autoPlay?: never;
   loop?: never;
-  playsInline?: never;
   controls?: never;
 };
 
@@ -34,7 +35,6 @@ export type VideoControlProps = {
   muted: boolean;
   autoPlay: boolean;
   loop: boolean;
-  playsInline: boolean;
   controls: boolean;
 };
 
@@ -47,4 +47,8 @@ export type Source = {
   type: ('image/webp' | 'image/png' | 'image/jpeg') | (string & {});
   sizes?: string;
   media?: string;
+};
+
+export type FadeOutOptions = {
+  fadeOutDurationMs: number;
 };

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, CSSProperties } from 'react';
 import PlaceHolderContext from '../placeholder/PlaceholderContext';
 import { MediaBaseProps, Source } from '../types';
-import { useImageLoad } from '../utils';
+import { useImageLoad } from '../hooks';
 import styles from '../styles.module.css';
 
 export type ImageProps = MediaBaseProps & {
@@ -9,7 +9,11 @@ export type ImageProps = MediaBaseProps & {
   src: string;
   sources: Source[];
   onLoad?(): void;
+  ariaHidden?: boolean;
 };
+
+// The cache will be cleared on a page refresh, but should work during the browser session
+const cache = new Set<string>();
 
 export const Image = ({
   alt,
@@ -17,26 +21,27 @@ export const Image = ({
   placeholder,
   src,
   onLoad,
-  width,
-  height,
+  aspectWidth,
+  aspectHeight,
   layout,
+  ariaHidden,
 }: ImageProps) => {
   const { imgRef } = useImageLoad({ onLoad: onImageLoad });
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   function onImageLoad() {
-    console.log('onImageLoadCalled');
-    setIsImageLoaded(true);
+    // add the src in the cache after a timeout to allow for the placeholder to transition out
+    setTimeout(() => {
+      cache.add(src);
+    }, 1000);
+
+    setIsLoaded(true);
     if (onLoad) {
       onLoad();
     }
   }
 
-  // const containerInlineStyles: CSSProperties =
-  //   (layout === 'responsive' && {
-  //     paddingBottom: `${(width! / height!) * 100}%`,
-  //   }) ||
-  //   {};
+  const isCached = cache.has(src);
 
   const containerClassNameLayout =
     (layout === 'fill' && styles.containerFill) ||
@@ -45,14 +50,14 @@ export const Image = ({
   const containerClassName = `${styles.containerBase} ${containerClassNameLayout}`;
   const containerInlineStyles: CSSProperties =
     (layout === 'responsive' && {
-      paddingBottom: `${(height! / width!) * 100}%`,
+      paddingBottom: `${(aspectHeight! / aspectWidth!) * 100}%`,
     }) ||
     {};
 
   return (
     <div style={containerInlineStyles} className={containerClassName}>
-      <PlaceHolderContext.Provider value={{ isImageLoaded }}>
-        {placeholder}
+      <PlaceHolderContext.Provider value={{ isLoaded: isLoaded }}>
+        {!isCached && placeholder}
       </PlaceHolderContext.Provider>
       <picture>
         {sources.map((source, i) => (
@@ -79,6 +84,7 @@ export const Image = ({
           alt={alt}
           onLoad={onImageLoad}
           ref={imgRef}
+          aria-hidden={ariaHidden}
         />
       </picture>
     </div>

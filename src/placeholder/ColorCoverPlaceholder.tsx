@@ -36,11 +36,11 @@ export const CoverPlaceholder = ({
   fadeOutOptions,
   coverColor,
 }: CoverPlaceholderProps) => {
-  const { isImageLoaded } = useContext(PlaceHolderContext);
+  const { isLoaded } = useContext(PlaceHolderContext);
 
   const transitionOutStyles = fadeOutOptions && {
     transition: `transform ${fadeOutOptions.fadeOutDurationMs}ms`,
-    transform: `translate3D(0, ${isImageLoaded ? '-100%' : '0%'}, 0)`,
+    transform: `translate3D(0, ${isLoaded ? '-101%' : '0%'}, 0)`,
   };
 
   return (

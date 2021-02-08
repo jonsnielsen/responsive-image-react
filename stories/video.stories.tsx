@@ -1,10 +1,9 @@
 import React from 'react';
 import { Video, VideoSource } from '../src/Video';
+// @ts-ignore
 import exampleVideo from './assets/iftheshoefits.mp4';
 import { LqipPlaceholder } from '../src/placeholder';
-import { ElementWrapper } from './components/ElementWrapper';
-import { MediaContainer } from './components/MediaContainer';
-import { StoryWrapper } from './components/StoryWrapper';
+import { StoryWrapper, MediaContainer, ElementWrapper } from './components';
 
 export default { title: 'Image' };
 
@@ -39,8 +38,8 @@ export const video = () => {
         <MediaContainer>
           <Video
             sources={sources}
-            width={1200}
-            height={674}
+            aspectWidth={1200}
+            aspectHeight={674}
             playsInline
             loop
             layout="responsive"
@@ -55,8 +54,8 @@ export const video = () => {
         <MediaContainer>
           <Video
             sources={sources}
-            width={1200}
-            height={674}
+            aspectWidth={1200}
+            aspectHeight={674}
             layout="responsive"
             isBackgroundVideo
           />
@@ -69,8 +68,8 @@ export const video = () => {
           <Video
             isBackgroundVideo
             sources={[]}
-            width={1200}
-            height={674}
+            aspectWidth={1200}
+            aspectHeight={674}
             layout="responsive"
             placeholder={
               <LqipPlaceholder
@@ -88,8 +87,8 @@ export const video = () => {
           <Video
             isBackgroundVideo
             sources={sources}
-            width={1200}
-            height={674}
+            aspectWidth={1200}
+            aspectHeight={674}
             layout="responsive"
             placeholder={
               <LqipPlaceholder

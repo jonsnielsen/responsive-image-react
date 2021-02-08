@@ -1,10 +1,10 @@
 import { createContext } from 'react';
 
 export interface IPlaceholderContext {
-  isImageLoaded: boolean;
+  isLoaded: boolean;
 }
 const PlaceHolderContext = createContext<IPlaceholderContext>({
-  isImageLoaded: false,
+  isLoaded: false,
 });
 
 export default PlaceHolderContext;

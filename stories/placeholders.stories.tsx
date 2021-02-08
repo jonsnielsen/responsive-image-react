@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image } from '../src/Image';
+import { Vimeo } from '../src/Vimeo';
+import { Video, VideoSource } from '../src/Video';
 import { Source } from '../src/types';
-import { LqipPlaceholder, CoverPlaceholder } from '../src/placeholder';
+import {
+  LqipPlaceholder,
+  CoverPlaceholder,
+  ImagePlaceholder,
+} from '../src/placeholder';
+import exampleVideo from './assets/iftheshoefits.mp4';
 import { StoryWrapper } from './components/StoryWrapper';
 import { ElementWrapper } from './components/ElementWrapper';
 import { MediaContainer } from './components/MediaContainer';
@@ -10,6 +17,13 @@ export default { title: 'Image' };
 
 const sanitySrc =
   'https://cdn.sanity.io/images/lwmsqpyb/production/7410d872197e5227a394031e43cf45669206b3ed-1920x1280.jpg';
+
+const videoSources: VideoSource[] = [
+  {
+    src: exampleVideo,
+    type: 'video/mp4',
+  },
+];
 
 const imageSources: Source[] = [
   {
@@ -29,62 +43,46 @@ const imageSources: Source[] = [
 const lqipSrc =
   'data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAANABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAIDBAYH/8QAIxAAAgIBAwQDAQAAAAAAAAAAAQIDBAAFESESFDFREyJhof/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAGhEAAgMBAQAAAAAAAAAAAAAAAAECERIDMf/aAAwDAQACEQMRAD8ApaFSpy1kMkjbqOCeOo+8a7fo9m9e2V+ZRz1Hz6znlHUbFqksZkZGT7B0O38yW5WDRNNM7ySt5YnJyjpUxKprwfUJ6vdOC223HnfDMrbHTMQCdv3DEuaBhH//2Q==';
 
-export const image = () => {
+export const placeholders = () => {
   return (
     <StoryWrapper>
       <ElementWrapper>
-        <h2>Resolution switching with (with webp and png)</h2>
+        LqipPlaceholder (persistent since image has invalid src)
         <MediaContainer>
-          <Image
-            alt="hello"
+          <Vimeo
             layout="responsive"
-            aspectWidth={5}
-            aspectHeight={3.3}
-            src={sanitySrc}
-            sources={imageSources}
+            videoId="239839786"
+            aspectWidth={176}
+            aspectHeight={99}
+            isBackgroundVideo
             placeholder={
-              <LqipPlaceholder
-                fadeOutOptions={{ fadeOutDurationMs: 300 }}
+              <ImagePlaceholder
+                src={sanitySrc}
+                sources={imageSources}
                 base64={lqipSrc}
+                fadeOutOptions={{ fadeOutDurationMs: 300 }}
               />
             }
           />
         </MediaContainer>
       </ElementWrapper>
       <ElementWrapper>
-        <h2>
-          Combining Art Direction with Resolution Switching (with webp and png)
-        </h2>
+        LqipPlaceholder (persistent since image has invalid src)
         <MediaContainer>
-          <Image
-            alt="hello"
+          <Video
+            isBackgroundVideo
+            sources={videoSources}
             layout="responsive"
-            aspectWidth={5}
-            aspectHeight={3.3}
-            src={sanitySrc}
-            sources={imageSources}
-            // placeholder={<Lqip base64={lqipSrc} />}
-          />
-        </MediaContainer>
-      </ElementWrapper>
-    </StoryWrapper>
-  );
-};
-
-export const placeholders = () => {
-  return (
-    <StoryWrapper>
-      <ElementWrapper>
-        lqip (Low Quality Image Placeholder)
-        <MediaContainer>
-          <Image
-            alt=""
-            layout="responsive"
-            aspectWidth={5}
-            aspectHeight={3.3}
-            src={sanitySrc}
-            sources={[]}
-            placeholder={<LqipPlaceholder base64={lqipSrc} />}
+            aspectWidth={176}
+            aspectHeight={99}
+            placeholder={
+              <ImagePlaceholder
+                src={sanitySrc}
+                sources={imageSources}
+                base64={lqipSrc}
+                fadeOutOptions={{ fadeOutDurationMs: 300 }}
+              />
+            }
           />
         </MediaContainer>
       </ElementWrapper>
@@ -92,12 +90,12 @@ export const placeholders = () => {
         lqip (Fading Out)
         <MediaContainer>
           <Image
-            alt=""
+            layout="responsive"
             aspectWidth={5}
             aspectHeight={3.3}
-            layout="responsive"
             src={sanitySrc}
             sources={[]}
+            alt=""
             placeholder={
               <LqipPlaceholder
                 base64={lqipSrc}
@@ -119,7 +117,7 @@ export const placeholders = () => {
             sources={[]}
             placeholder={
               <CoverPlaceholder
-                coverColor="#418031"
+                coverColor="#33aaff"
                 fadeOutOptions={{ fadeOutDurationMs: 300 }}
               />
             }

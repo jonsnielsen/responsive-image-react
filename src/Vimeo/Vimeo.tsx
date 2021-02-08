@@ -1,94 +1,83 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState, CSSProperties } from 'react';
 import PlaceHolderContext from '../placeholder/PlaceholderContext';
 import styles from './vimeo.module.css';
-import { MediaBaseProps } from '../types';
-// import styles from './vimeo.module.scss';
-import { useImageLoad } from '../utils';
-import Video from '@vimeo/player';
+import { MediaBaseProps, VideoBaseProps } from '../types';
 
-export type VimeoProps = MediaBaseProps & {
+export type VimeoProps = VideoBaseProps & {
+  playsInline?: never;
   videoId: string;
-  // aspectRatio: number;
+  layout: 'fixed' | 'responsive';
   onLoad?(): void;
 };
 
+/**
+ * Vimeo themselves start with an LQIP that then fades into the video.
+ * This means that you probably want to use lqip placeholder as well, as using higher resolution image as placeholder,
+ * would result a flicker to lqip again
+ */
 export const Vimeo = ({
+  style,
+  className,
   layout,
-  width,
-  height,
+  aspectWidth,
+  aspectHeight,
   videoId,
   placeholder,
   onLoad,
+  isBackgroundVideo,
+  muted,
+  autoPlay,
+  loop,
+  controls,
 }: VimeoProps) => {
-  // const { imgRef } = useImageLoad({ onLoad: onI });
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const iframeRef = createRef<HTMLIFrameElement>();
-  // const vimeoRef = createRef<any>();
 
-  // useEffect(() => {
-  //   const playerOptions = {
-  //     url: `https://vimeo.com/${videoId}`,
-  //     // width: 800,
-  //   };
+  function onIframeLoad() {
+    if (onLoad) {
+      onLoad();
+    }
+  }
 
-  //   var videoPlayer = new Video(vimeoRef.current!, playerOptions);
+  const containerInlineStyles: CSSProperties =
+    (layout === 'responsive' && {
+      paddingBottom: `${(aspectHeight! / aspectWidth!) * 100}%`,
+    }) ||
+    {};
 
-  //   videoPlayer.on('play', function() {
-  //     console.log('Played the video');
-  //   });
-  // }, []);
-
-  // function onIframeLoad(ev: any) {
-  //   console.log('iframe loaded');
-
-  //   console.log('inside: ', iframeRef.current);
-  //   if (iframeRef.current) {
-  //     const new_style_element = document.createElement('style');
-  //     new_style_element.textContent = 'div { background: red; }';
-  //     console.log(iframeRef.current.contentDocument);
-  //     if (iframeRef.current.contentDocument) {
-  //       console.log('we gotit');
-  //       iframeRef.current.contentDocument?.head.appendChild(new_style_element);
-  //     }
-  //   }
-  //   console.log(ev.target);
-  //   // setIsImageLoaded(true);
-  //   // if (onLoad) {
-  //   //   onLoad();
-  //   // }
-  // }
-  // console.log({ style });
-  const wrapperStyle = layout === 'fill' ? styles.wrapperFill : styles.test;
-  // const wrapperStyle = styles.test;
+  const parameters = isBackgroundVideo
+    ? `background=1`
+    : `autoplay=${+!!autoPlay}&loop=${+!!loop}&muted=${+!!muted}&controls=${+!!controls}`;
 
   return (
-    <div className={wrapperStyle}>
-      <div>
-        <iframe
-          // onLoad={onIframeLoad}
-          ref={iframeRef}
-          width="100%"
-          height="100%"
-          className={styles.iframe}
-          src={`https://player.vimeo.com/video/${videoId}?t&background=1`}
-        />
-      </div>
+    <div
+      style={{ ...containerInlineStyles, ...style }}
+      className={`${styles.containerBase} ${className}`}
+    >
+      <PlaceHolderContext.Provider value={{ isLoaded: false }}>
+        {placeholder}
+      </PlaceHolderContext.Provider>
+      <iframe
+        className={styles.vimeo}
+        onLoad={onIframeLoad}
+        ref={iframeRef}
+        width="100%"
+        height="100%"
+        frameBorder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+        src={`https://player.vimeo.com/video/${videoId}?title=0&${parameters}`}
+      />
     </div>
   );
-
-  // return (
-  //   <video
-  //     preload="none"
-  //     tabIndex={-1}
-  //     style={{}}
-  //     src="https://player.vimeo.com/0c4f4f44-c8bd-4a3b-933d-feed89df13e5"
-  //   ></video>
-  //   // <div className={wrapperStyle}>
-  //   <div
-  //     ref={vimeoRef}
-  //     data-vimeo-width="100%"
-  //     data-vimeo-height="100%"
-  //   ></div>
-  // </div>
-  // );
 };
+
+{
+  /* <iframe
+  src="https://player.vimeo.com/video/238321573?autoplay=1&loop=1&title=0&byline=0&portrait=0"
+  width="640"
+  height="360"
+  frameborder="0"
+  allow="autoplay; fullscreen; picture-in-picture"
+  allowfullscreen
+></iframe>; */
+}
