@@ -129,3 +129,32 @@ export const placeholders = () => {
     </StoryWrapper>
   );
 };
+/**
+ * type Source = {
+ *   sizes?: string
+ *   srcSet: string
+ *   media?: string
+ * }
+ *
+ * interface ICreateSource {
+ *
+ * }
+ * const imageSource1 = createSource({
+ *   uri: https://blabla
+ *   imageLoader: imgixLoader,
+ *   type: 'responsive',
+ *   media: '(max-width: 700px)',
+ *   responsiveOptions: {
+ *     breakpoints: [{ imageWidth: 400, screenWidth: 600 }]}),
+ *     imageRatio: 1.3,
+ *     imageMultipliers: [2]
+ *   }
+ * })
+ * return (
+ *   <Image
+ *     sources=[imageSource1]
+ *     src={defaultSource}
+ *     alt
+ *   />
+ * )
+ */

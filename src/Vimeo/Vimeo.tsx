@@ -30,8 +30,6 @@ export const Vimeo = ({
   loop,
   controls,
 }: VimeoProps) => {
-  const iframeRef = createRef<HTMLIFrameElement>();
-
   function onIframeLoad() {
     if (onLoad) {
       onLoad();
@@ -59,25 +57,12 @@ export const Vimeo = ({
       <iframe
         className={styles.vimeo}
         onLoad={onIframeLoad}
-        ref={iframeRef}
         width="100%"
         height="100%"
         frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
-        allowFullScreen
         src={`https://player.vimeo.com/video/${videoId}?title=0&${parameters}`}
       />
     </div>
   );
 };
-
-{
-  /* <iframe
-  src="https://player.vimeo.com/video/238321573?autoplay=1&loop=1&title=0&byline=0&portrait=0"
-  width="640"
-  height="360"
-  frameborder="0"
-  allow="autoplay; fullscreen; picture-in-picture"
-  allowfullscreen
-></iframe>; */
-}
