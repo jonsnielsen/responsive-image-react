@@ -25,7 +25,7 @@ export type MediaBaseProps = {
 export type BackgroundVideoProps = {
   isBackgroundVideo: true;
   muted?: never;
-  autoPlay?: never;
+  autoPlay?: boolean;
   loop?: never;
   controls?: never;
 };

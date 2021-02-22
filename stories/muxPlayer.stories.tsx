@@ -1,5 +1,6 @@
 import React from 'react';
 import { MuxPlayer } from '../src/MuxPlayer';
+import { LqipPlaceholder } from '../src';
 import exampleVideo from './assets/iftheshoefits.mp4';
 import { ElementWrapper } from './components/ElementWrapper';
 import { MediaContainer } from './components/MediaContainer';
@@ -27,15 +28,15 @@ export const mux = () => {
           />
         </MediaContainer>
       </ElementWrapper>
-      <ElementWrapper>
-        <h2>Layout: resonsive</h2>
+      <ElementWrapper style={{ marginBottom: '100px' }}>
+        <h2>Layout: resonsive (should be overflowing the border)</h2>
         <MediaContainer>
           <MuxPlayer
             isBackgroundVideo
             playbackId="YLXRY1MB00yDUjgP9KQEP2Yhs7cRGLWg3oB01KQTCCN7Y"
             layout="responsive"
-            aspectWidth={675}
-            aspectHeight={1200}
+            aspectWidth={500}
+            aspectHeight={500}
           />
         </MediaContainer>
       </ElementWrapper>
@@ -53,8 +54,23 @@ export const mux = () => {
         <h2>Placeholder and Layout: fill</h2>
         <MediaContainer>
           <MuxPlayer
-            playbackId="YLXRY1MB00yDUjgP9KQEP2Ys7cRGLWg3oB01KQTCCN7Y"
+            playbackId="YLXRY1MB00yDUjgP9KQEP2Yhs7cRGLWg3oB01KQTCCN7Y"
             layout="fill"
+            isBackgroundVideo
+            placeholder={<LqipPlaceholder base64={lqipSrc} />}
+          />
+        </MediaContainer>
+      </ElementWrapper>
+      <ElementWrapper>
+        <h2>
+          Background video using gif fallback (test in a browser where you can
+          disable automatic video playing)
+        </h2>
+        <MediaContainer>
+          <MuxPlayer
+            playbackId="YLXRY1MB00yDUjgP9KQEP2Yhs7cRGLWg3oB01KQTCCN7Y"
+            layout="fill"
+            fallbackGifOptions={{ width: 500, fps: 30 }}
             isBackgroundVideo
           />
         </MediaContainer>

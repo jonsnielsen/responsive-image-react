@@ -54,10 +54,10 @@ export const Video = forwardRef<HTMLVideoElement, VideoProps>(
     }
 
     useEffect(() => {
-      if (autoPlay || isBackgroundVideo) {
+      if (autoPlay || (typeof autoPlay === 'undefined' && isBackgroundVideo)) {
         videoRef?.current?.play();
       }
-    }, []);
+    }, [autoPlay, isBackgroundVideo]);
 
     const containerClassNameLayout =
       (layout === 'fill' && commonStyles.containerFill) ||
