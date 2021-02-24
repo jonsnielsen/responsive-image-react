@@ -85,8 +85,6 @@ export const MuxPlayer = React.forwardRef(
       }
     }, []);
 
-    // if fallback to gif, do something when fail
-
     function attemptPlay() {
       videoRef.current?.play().catch(err => {
         console.log('error attempting to play: ', err);
@@ -101,11 +99,16 @@ export const MuxPlayer = React.forwardRef(
       if (preventLoading) return;
 
       const hls = new Hls({ enableWorker: false });
-      hls.loadSource(`https://stream.mux.com/${playbackId}.m3u8`);
       if (videoRef.current) {
         hls.attachMedia(videoRef.current);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+          hls.loadSource(`https://stream.mux.com/${playbackId}.m3u8`);
+        });
       }
       setSourceIsLoaded(true);
+      return () => {
+        hls.destroy();
+      };
     }, [preventLoading]);
 
     useEffect(() => {
