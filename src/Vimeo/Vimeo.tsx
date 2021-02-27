@@ -1,13 +1,15 @@
-import React, { createRef, useEffect, useState, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import PlaceHolderContext from '../placeholder/PlaceholderContext';
-import styles from './vimeo.module.css';
-import { MediaBaseProps, VideoBaseProps } from '../types';
+import vimeoStyles from './vimeo.module.css';
+import styles from '../styles.module.css';
+import { VideoBaseProps } from '../types';
 
 export type VimeoProps = VideoBaseProps & {
   playsInline?: never;
   videoId: string;
   layout: 'fixed' | 'responsive';
   onLoad?(): void;
+  preventLoading?: boolean;
 };
 
 /**
@@ -29,6 +31,7 @@ export const Vimeo = ({
   autoPlay,
   loop,
   controls,
+  preventLoading,
 }: VimeoProps) => {
   function onIframeLoad() {
     if (onLoad) {
@@ -54,15 +57,17 @@ export const Vimeo = ({
       <PlaceHolderContext.Provider value={{ isLoaded: false }}>
         {placeholder}
       </PlaceHolderContext.Provider>
-      <iframe
-        className={styles.vimeo}
-        onLoad={onIframeLoad}
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        allow="autoplay; fullscreen; picture-in-picture"
-        src={`https://player.vimeo.com/video/${videoId}?title=0&${parameters}`}
-      />
+      {!preventLoading && (
+        <iframe
+          className={vimeoStyles.vimeo}
+          onLoad={onIframeLoad}
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          src={`https://player.vimeo.com/video/${videoId}?title=0&${parameters}`}
+        />
+      )}
     </div>
   );
 };

@@ -11,6 +11,8 @@ const imageStyles: CSSProperties = {
 };
 
 export interface LqipPlaceholderProps {
+  style?: CSSProperties;
+  className?: string;
   base64: string;
   fadeOutOptions?: {
     fadeOutDurationMs: number;
@@ -18,6 +20,8 @@ export interface LqipPlaceholderProps {
 }
 
 export const LqipPlaceholder = ({
+  style,
+  className,
   base64,
   fadeOutOptions,
 }: LqipPlaceholderProps) => {
@@ -37,7 +41,9 @@ export const LqipPlaceholder = ({
         ...imageStyles,
         ...fadeOutStyles,
         opacity: isLoaded ? 0 : 1,
+        ...style,
       }}
+      className={className}
       aria-hidden={true}
       src={base64}
       onTransitionEnd={() => {
