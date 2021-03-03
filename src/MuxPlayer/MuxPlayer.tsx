@@ -95,20 +95,33 @@ export const MuxPlayer = React.forwardRef(
       });
     }
 
+    // @ts-ignore not all codepaths return a value error
     useEffect(() => {
       if (preventLoading) return;
 
-      const hls = new Hls({ enableWorker: false });
-      if (videoRef.current) {
-        hls.attachMedia(videoRef.current);
-        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
-          hls.loadSource(`https://stream.mux.com/${playbackId}.m3u8`);
-        });
+      const src = `https://stream.mux.com/${playbackId}.m3u8`;
+
+      if (videoRef.current?.canPlayType('application/vnd.apple.mpegurl')) {
+        // This will run in safari, where HLS is supported natively
+        videoRef.current.src = src;
+        setSourceIsLoaded(true);
+      } else if (Hls.isSupported()) {
+        const hls = new Hls({ enableWorker: false });
+        if (videoRef.current) {
+          hls.attachMedia(videoRef.current);
+          hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+            hls.loadSource(src);
+          });
+        }
+        setSourceIsLoaded(true);
+        return () => {
+          hls.destroy();
+        };
+      } else {
+        // Hls is not supported
+        console.log(`Browser doesn't support Hls.js, Using Gif as fallback`);
+        setUseGif(true);
       }
-      setSourceIsLoaded(true);
-      return () => {
-        hls.destroy();
-      };
     }, [preventLoading]);
 
     useEffect(() => {
