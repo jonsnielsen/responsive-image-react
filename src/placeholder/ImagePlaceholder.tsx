@@ -6,7 +6,6 @@ import { FadeOutOptions } from '../types';
 
 const wrapperStyles: CSSProperties = {
   position: 'absolute',
-  zIndex: 1,
   top: 0,
   left: 0,
   width: '100%',
@@ -41,11 +40,12 @@ export const ImagePlaceholder = ({
 
   const isHidden = fadeOutStyles ? isTransitionEnded && isLoaded : isLoaded;
 
-  return isHidden ? null : (
+  return (
     <div
       style={{
         ...wrapperStyles,
-        opacity: isLoaded ? 0 : 1,
+        opacity: fadeOutStyles && isLoaded ? 0 : 1, // opacity is animated if there are 'fadeOutStyles' present
+        zIndex: isHidden ? -1 : 1,
         ...fadeOutStyles,
       }}
       onTransitionEnd={() => {
@@ -62,8 +62,7 @@ export const ImagePlaceholder = ({
         layout="fill"
         sources={sources}
         src={src}
-        // alt should be empty, as the placeholder is not content we want visible to screen reader / search indexed
-        alt=""
+        alt="" // empty to not index placeholder
         aria-hidden
       />
     </div>
