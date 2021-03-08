@@ -39,6 +39,7 @@ export const Video = forwardRef<HTMLVideoElement, VideoProps>(
       loop,
       playsInline,
       controls,
+      disableRemotePlayback,
     }: VideoProps,
     forwardedRef
   ) => {
@@ -86,6 +87,9 @@ export const Video = forwardRef<HTMLVideoElement, VideoProps>(
           playsInline={isBackgroundVideo ? false : playsInline}
           controls={isBackgroundVideo ? false : controls}
           onLoadedData={onVideoLoad} // Fired when the first frame of the video is loaded
+          disableRemotePlayback={
+            isBackgroundVideo ? true : disableRemotePlayback
+          }
         >
           {sources.map(source =>
             isVideoSource(source) ? (

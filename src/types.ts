@@ -28,6 +28,10 @@ export type BackgroundVideoProps = {
   autoPlay?: boolean;
   loop?: never;
   controls?: never;
+  /**
+   * If true, remote playback like chromecast is disabled
+   */
+  disableRemotePlayback?: never;
 };
 
 export type VideoControlProps = {
@@ -36,6 +40,10 @@ export type VideoControlProps = {
   autoPlay: boolean;
   loop: boolean;
   controls: boolean;
+  /**
+   * If true, remote playback like chromecast is disabled
+   */
+  disableRemotePlayback: boolean;
 };
 
 export type VideoBaseProps = MediaBaseProps & {

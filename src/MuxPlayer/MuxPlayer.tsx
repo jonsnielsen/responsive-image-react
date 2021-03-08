@@ -1,12 +1,8 @@
 // https://stream.mux.com/QhB33iydisgSEarLVrPFxm9ssRfyom7duGHZOfjfZIc
 import React, { useRef, useEffect, useState } from 'react';
-import PlaceHolderContext from '../placeholder/PlaceholderContext';
-import styles from './vimeo.module.css';
 import { VideoBaseProps } from '../types';
 import Hls from 'hls.js';
 import { Image } from '../Image';
-// import styles from './vimeo.module.scss';
-// import { useImageLoad } from '../hooks';
 import { Video } from '../Video';
 
 export type MuxPlayerProps = VideoBaseProps & {
@@ -48,6 +44,7 @@ export const MuxPlayer = React.forwardRef(
       preventLoading,
       className,
       style,
+      disableRemotePlayback,
     }: MuxPlayerProps,
     ref
   ) => {
@@ -180,6 +177,7 @@ export const MuxPlayer = React.forwardRef(
         aspectWidth={aspectHeight!} // use the bang, otherwise TS complains because of the layout prop
         aspectHeight={aspectWidth!}
         isBackgroundVideo={isBackgroundVideo}
+        disableRemotePlayback={disableRemotePlayback}
       />
     );
   }
