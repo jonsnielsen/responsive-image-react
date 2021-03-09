@@ -1,5 +1,9 @@
 import { ReactElement, CSSProperties } from 'react';
 
+export type DistributiveOmit<T, K extends keyof T> = T extends unknown
+  ? Omit<T, K>
+  : never;
+
 const VALID_LAYOUT_VALUES = ['fill', 'fixed', 'responsive'] as const;
 type LayoutValue = typeof VALID_LAYOUT_VALUES[number];
 

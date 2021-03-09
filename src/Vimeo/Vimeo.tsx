@@ -2,9 +2,12 @@ import React, { CSSProperties } from 'react';
 import PlaceHolderContext from '../placeholder/PlaceholderContext';
 import vimeoStyles from './vimeo.module.css';
 import styles from '../styles.module.css';
-import { VideoBaseProps } from '../types';
+import { VideoBaseProps, DistributiveOmit } from '../types';
 
-export type VimeoProps = VideoBaseProps & {
+export type VimeoProps = DistributiveOmit<
+  VideoBaseProps,
+  'disableRemotePlayback'
+> & {
   playsInline?: never;
   videoId: string;
   layout: 'fixed' | 'responsive';
